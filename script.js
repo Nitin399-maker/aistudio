@@ -146,7 +146,7 @@ async function loadModels() {
     if (config.models && config.models.length > 0) {
       S.availableModels = config.models.filter(model => {
         const modelName = model.toLowerCase();
-        return modelName=="models/gemini-2.5-pro";
+        return modelName.includes("gemini-2.5-pro");
       }); 
       updateModelDropdown();
       if (!S.selectedModel && S.availableModels.length > 0) {
