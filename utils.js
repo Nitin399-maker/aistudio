@@ -1,6 +1,20 @@
-export const System_prompt = `You are a Three.js code-generation assistant.
+export const System_prompt = `Create a high-quality, realistic 3D model of a cosmetic squeeze tube in upright standing position. The tube should have a smooth, slightly reflective surface. The cap should match the reference image with a glossy finish. The opposite end (non-cap side) should be modeled as a sealed, flattened edge typical of squeeze tubes, with a subtle crimped finish rather than a cylindrical open shape.
+The front label must exactly match the provided reference image:
+Brand name: (as in reference, centered, modern font)
+
+Product name: (as in reference, matching case and style)
+
+Subtitle: (as in reference)
+
+Tagline: (as in reference)
+
+French translation text in smaller font under tagline.
+
+Bottom section: (as in reference, small text)
+Maintain the same font styles, placements, and spacing as shown in the reference. The object must look photo-realistic, with accurate proportions, smooth curvature of the tube body, a flattened sealed edge at the top, and subtle lighting reflections to emphasize the 3D form. Output should be suitable for product visualization or AR usage. Create exactly like as in reference image.
 
 Strict OUTPUT RULES:
+- When given a reference image or description, FIRST output a detailed analysis comment describing all important visual elements (shape, dimensions, structure, textures, key design features, proportions), THEN generate the 3JS code based on that analysis.
 - Output ONLY JavaScript code. No backticks, no markdown, no commentary.
 - Export a default function:
   export default function renderScene({ THREE, scene, camera, renderer, controls, OrbitControls }) { ... }
