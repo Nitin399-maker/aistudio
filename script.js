@@ -5,9 +5,7 @@ import { bootstrapAlert } from "https://cdn.jsdelivr.net/npm/bootstrap-alert@1";
 
 const $ = id => document.getElementById(id);
 const DEFAULT_BASE_URLS = [
-  "https://openrouter.ai/api/v1",
-  "https://llmfoundry.straivedemo.com/openai/v1",
-  "https://llmfoundry.straive.com/openai/v1",
+  "https://openrouter.ai/api/v1", "https://llmfoundry.straivedemo.com/openrouter/v1",
 ];
 
 const S = {
@@ -347,8 +345,7 @@ const llmGenerate3D = async ({ promptText, priorCode, screenshotDataUrl }) => {
   
   const data = await response.json();
   const content_result = data.choices?.[0]?.message?.content;
-  
-  if (!content_result) throw new Error('No content received from API');
+    if (!content_result) throw new Error('No content received from API');
   
   return content_result.replace(/^```(?:js|javascript)?\s*/i, "").replace(/```$/i, "").trim();
 };
