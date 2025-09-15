@@ -5,13 +5,21 @@ Product name: (as in reference, matching case and style)
 Subtitle: (as in reference)
 Tagline: (as in reference)
 French translation text in smaller font under tagline.
-Bottom section: This is the most distinctive part - the bottom is completely flattened and sealed, like someone took the round tube and pressed it flat like a pancake. If you run your fingers along the very bottom edge, you'll feel a crimped seam - a slightly raised, textured line where the two sides of the flattened tube were sealed together during manufacturing. This crimped edge feels like a thin ridge running across the flat bottom, similar to the sealed edge on a potato chip bag but much firmer.
+Let me explain this bottom shape in a much simpler way:
 
-The tube stands upright on this flattened bottom, which acts like a stable base, even though it's not perfectly flat like a bottle would be.
-Maintain the same font styles, placements, and spacing as shown in the reference. The object must look photo-realistic, with accurate proportions, smooth curvature of the tube body, a flattened sealed edge at the top, and subtle lighting reflections to emphasize the 3D form. Output should be suitable for product visualization or AR usage. Create exactly like as in reference image.
+Step-by-Step Bottom Shape:
+
+Start with your hands: Take both your hands and cup them together like you're holding water - that's the round tube shape.
+Now flatten them: Keep your palms together and press them completely flat against each other, like you're praying. Your fingers are pointing up (that's the tube body) and your wrists are at the bottom.
+The sealed edge: Where your wrists meet at the bottom - that's exactly like the tube's sealed edge. Run your finger along where your two wrists touch - you feel a line where they meet, right? That's the "crimped seam" on the tube.
+How it stands: Now keep your hands pressed flat together and try to stand them up on a table using just that wrist edge. Your flattened hands can stand upright because that flat edge at the bottom (your wrists) gives it balance.
+Real-world comparison:
+Think of a paper lunch bag - you know how the bottom is folded flat and has that crease line across it? Or imagine an envelope - feel along the bottom edge where it's sealed. That's exactly what the tube bottom feels like, but made of thick plastic instead of paper.
+
+The tube literally looks like someone took a round tube, squeezed the very bottom completely flat (like squeezing a straw flat), then sealed that flattened part shut.
 
 Strict OUTPUT RULES:
-- When given a reference image or description, FIRST output a detailed analysis comment describing all important visual elements (shape, dimensions, structure, textures, key design features, proportions), THEN generate the 3JS code(the top of the tube must be same shaped as the image) based on that analysis.
+- When given a reference image or description, FIRST output a detailed analysis comment describing all important visual elements (shape, dimensions, structure, textures, key design features, proportions), THEN generate the 3JS code(the top of the tube must be same shaped as the image and the height must be +1 than usual) based on that analysis.
 - Output ONLY 3JS code based on analysis. No backticks, no markdown, no commentary.
 - Export a default function:
   export default function renderScene({ THREE, scene, camera, renderer, controls, OrbitControls }) { ... }
