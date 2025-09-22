@@ -1,6 +1,6 @@
 import { System_prompt, FRAME_TEMPLATE, render3DViewerHTML } from "./utils.js";
 import { openaiConfig } from "https://cdn.jsdelivr.net/npm/bootstrap-llm-provider@1";
-import { openaiHelp } from "https://tools.s-anand.net/common/aiconfig.js";
+import { openrouterHelp } from "./utils.js";
 import { bootstrapAlert } from "https://cdn.jsdelivr.net/npm/bootstrap-alert@1";
 
 const $ = id => document.getElementById(id);
@@ -18,6 +18,7 @@ const S = {
   currentFrame: null,
   availableModels: [],
   selectedImageModel: null,
+  selected3DModel: null, 
   referenceImageBase64: null,
   imageLoading: false,
   objectLoading: false
@@ -106,17 +107,25 @@ const updateReferenceImageBase64 = async () => {
 // Model management
 const loadModels = async () => {
   try {
-    const config = await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, help: openaiHelp });
+    const config = await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, help: openrouterHelp });
     if (config.models?.length) {
       S.availableModels = config.models.filter(model => {
         const m = model.toLowerCase();
-        return m.includes("gemini") || m.includes("gpt-4") || m.includes("claude");
+        return m.includes("gemini");
       });
       updateModelDropdowns();
+      
+      // Auto-select specific models
       if (!S.selectedImageModel) {
         S.selectedImageModel = S.availableModels.find(m => 
-          m.toLowerCase() === "google/gemini-2.5-flash-image-preview") || S.availableModels[0];
+          m === "google/gemini-2.5-flash-image-preview") || S.availableModels[0];
         if ($('image-model-select')) $('image-model-select').value = S.selectedImageModel;
+      }
+      
+      if (!S.selected3DModel) {
+        S.selected3DModel = S.availableModels.find(m => 
+          m === "google/gemini-2.5-pro") || S.availableModels[0];
+        if ($('3d-model-select')) $('3d-model-select').value = S.selected3DModel;
       }
     }
   } catch (error) {
@@ -265,7 +274,7 @@ const buildPrompt = (prompt, isImage) =>
 
 // API calls
 const llmGenerateImage = async ({ promptText, referenceImageBase64, isEdit }) => {
-  const { apiKey, baseUrl } = await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, help: openaiHelp });
+  const { apiKey, baseUrl } = await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, help: openrouterHelp });
   if (!apiKey) throw new Error('OpenAI key missing. Please configure your key.');
   
   const imageModel = S.selectedImageModel || "google/gemini-2.5-flash-image-preview";
@@ -312,10 +321,10 @@ const llmGenerateImage = async ({ promptText, referenceImageBase64, isEdit }) =>
 };
 
 const llmGenerate3D = async ({ promptText, priorCode, screenshotDataUrl }) => {
-  const { apiKey, baseUrl } = await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, help: openaiHelp });
+  const { apiKey, baseUrl } = await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, help: openrouterHelp });
   if (!apiKey) throw new Error('OpenAI key missing. Please configure your key.');
   
-  const threeDModel = "google/gemini-2.5-pro";
+  const threeDModel = S.selected3DModel || "gemini-2.5-pro";
   const messages = [{ role: "system", content: System_prompt }];
 
   const content = priorCode && screenshotDataUrl ? [
@@ -516,7 +525,8 @@ const setup3DControls = () => {
   });
 
   const modelHandlers = {
-    'image-model-select': v => S.selectedImageModel = v
+    'image-model-select': v => S.selectedImageModel = v,
+    '3d-model-select': v => S.selected3DModel = v 
   };
 
   Object.entries(modelHandlers).forEach(([id, handler]) => {
@@ -589,7 +599,7 @@ const loadSamples = () => {
 // Initialize
 (() => {
   $('openai-config-btn')?.addEventListener('click', async () => {
-    await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, show: true, help: openaiHelp });
+    await openaiConfig({ defaultBaseUrls: DEFAULT_BASE_URLS, show: true, help: openrouterHelp });
     await loadModels();
   });
 
